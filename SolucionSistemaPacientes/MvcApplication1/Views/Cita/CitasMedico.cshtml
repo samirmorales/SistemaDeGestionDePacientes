@@ -1,0 +1,98 @@
+﻿@model MvcApplication1.Models.medicoModel
+
+@{
+    Layout = "~/Views/MasterIntranet.cshtml";
+    ViewBag.Title = "GestionarHorario";
+}
+
+<section class="content-header">
+    <h1>
+        Gestionar Horarios
+        <small>Registrar, buscar, modificar y eliminar horarios.</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-heartbeat"></i> Inicio</a></li>
+        <li><a href="#"><i></i> Médico</a></li>
+        <li class="active">Gestionar Horario</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+            @if (@ViewBag.mensaje!=null)
+            {
+                <div class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-check"></i> @ViewBag.mensaje</h4>
+                </div>
+            }
+        </div>    
+     </div>        
+    <div class="row">
+            <!-- left column -->
+        <div class="col-md-3">
+            </div>
+            <div class="col-md-6">
+              <!-- Horizontal Form -->
+              <div class="box box-info">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Seleccionar Médico</h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                @using (Html.BeginForm("DetCitasMedico", "Cita", FormMethod.Post, new { id = "especMedicoForm", @class = "form-horizontal" }))
+                { 
+                  <div class="box-body">
+                     <div class="form-group">
+                        <label for="apellidoPaterno" class="col-sm-4 control-label">Especialidad:</label>
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.idEspecialidad, new SelectList(Model.listaEspecialidades, "idEspecialidad", "especialidad"), "Seleccione..", new { title = "Selecione especialidad.", id = "especialidad", @class="form-control", required="true", @onchange = "javascript:GetCity(this.value);"} )
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="apellidoMaterno" class="col-sm-4 control-label">Médico:</label>
+                        <div class="col-sm-8">
+                            <select id="medico" name="medico" title = "Selecione médico." class="form-control" required></select>
+                        </div>
+                    </div>
+                  </div><!-- /.box-body -->
+                    
+                  <div class="box-footer">
+                    <button type="submit" class="btn btn-info pull-right">Ver Citas</button>
+                  </div><!-- /.box-footer -->
+                }
+              </div><!-- /.box -->
+           </div><!-- /.col6 -->
+
+           <div class="col-md-3">
+            
+           </div><!-- /.col6 -->
+        </div><!-- /.row -->
+    <script language="javascript" type="text/javascript">
+        function GetCity(_especialidadId) {
+            var procemessage = "<option value=''> Cargando...</option>";
+            $("#medico").html(procemessage).show();
+            var url = "/Medico/GetMedicoByEspecialidadId/" + _especialidadId;
+            $.ajax({
+                url: url,
+                data: { especialidadid: _especialidadId },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value=''>Seleccione médico...</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#medico").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+
+        }
+    </script>
+</section><!-- /.content -->
+

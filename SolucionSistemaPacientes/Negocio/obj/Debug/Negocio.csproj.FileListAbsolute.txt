@@ -1,0 +1,9 @@
+C:\Users\deyvisamir\documents\visual studio 2012\Projects\SolucionSistemaPacientes\Negocio\obj\Debug\Negocio.csprojResolveAssemblyReference.cache
+C:\Users\deyvisamir\documents\visual studio 2012\Projects\SolucionSistemaPacientes\Negocio\bin\Debug\Negocio.dll
+C:\Users\deyvisamir\documents\visual studio 2012\Projects\SolucionSistemaPacientes\Negocio\bin\Debug\Negocio.pdb
+C:\Users\deyvisamir\documents\visual studio 2012\Projects\SolucionSistemaPacientes\Negocio\bin\Debug\Datos.dll
+C:\Users\deyvisamir\documents\visual studio 2012\Projects\SolucionSistemaPacientes\Negocio\bin\Debug\Entidades.dll
+C:\Users\deyvisamir\documents\visual studio 2012\Projects\SolucionSistemaPacientes\Negocio\bin\Debug\Datos.pdb
+C:\Users\deyvisamir\documents\visual studio 2012\Projects\SolucionSistemaPacientes\Negocio\bin\Debug\Entidades.pdb
+C:\Users\deyvisamir\documents\visual studio 2012\Projects\SolucionSistemaPacientes\Negocio\obj\Debug\Negocio.dll
+C:\Users\deyvisamir\documents\visual studio 2012\Projects\SolucionSistemaPacientes\Negocio\obj\Debug\Negocio.pdb

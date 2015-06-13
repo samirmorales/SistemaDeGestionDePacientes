@@ -1,0 +1,237 @@
+﻿@model MvcApplication1.Models.citaModel
+
+@{
+    Layout = "~/Views/MasterIntranet.cshtml";
+    ViewBag.Title = "DetHorario";
+}
+
+<section class="content-header">
+    <h1>
+        Nueva Cita
+        <small>Registrar nueva cita.</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-heartbeat"></i> Inicio</a></li>
+        <li><a href="#"><i></i> Cita</a></li>
+        <li class="active">Nueva Cita</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+     </div> 
+            <div class="row">
+             <!-- left column -->
+             <div class="col-md-6">
+              <!-- Horizontal Form -->
+              <div class="box box-info">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Nueva Cita</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                  </div>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                  <div class="box-body">
+                     <form id = "agregarHoarioForm" class = "form-horizontal" onsubmit = "return validacion()" action="javascript:registrarHorario()">
+                        <div class="form-group">
+                            <label for="apellidoPaterno" class="col-sm-4 control-label">Especialidad:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(m => m.idEspecialidad, new SelectList(Model.listaEspecialidades, "idEspecialidad", "especialidad"), "Seleccione..", new { title = "Selecione especialidad.", id = "especialidad", @class="form-control", required="true", @onchange = "javascript:GetCity(this.value);"} )
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="apellidoMaterno" class="col-sm-4 control-label">Médico:</label>
+                            <div class="col-sm-8">
+                                <select id="medico" name="medico" title = "Selecione médico." class="form-control" onchange="calendarioMedico()" required></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono" class="col-sm-4 control-label">Paciente:</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="paciente" name="paciente" class="form-control"/>
+                                <input type="hidden" id="pacienteId" name="pacienteId" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="direccion" class="col-sm-4 control-label">Fecha:</label>
+                            <div class="col-sm-8" style="padding-left: 15px; padding-right: 15px;">
+                                <div class="input-group-addon" style="float: left; width: 11%; height: 34px;">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input style="float: right; width: 89%;" type="text" class="form-control" id="fecha" name="fecha" data-inputmask="'alias': 'dd/mm/yyyy'" required data-mask/>
+                            </div><!-- /.input group -->
+                        </div>
+                        <div class="col-md-12">
+                            <div class="box box-solid">
+                                <div class="box-header with-border">
+                                  <h3 class="box-title">Hora de la cita</h3>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                          <div class="bootstrap-timepicker pull-right">
+                                            <div class="form-group">
+                                              <label class="col-sm-4 control-label">Inicio:</label>
+                                              <div class="input-group col-sm-8" style="padding-right: 12px;">
+                                                <input type="text" class="form-control timepicker" id="horaInicio" name="horaInicio"/>
+                                                <div class="input-group-addon">
+                                                  <i class="fa fa-clock-o"></i>
+                                                </div>
+                                              </div><!-- /.input group -->
+                                            </div><!-- /.form group -->
+                                        </div><!-- /.bootstrap-timepicker -->
+                                      </div>
+                                      <div class="col-md-6">
+                                          <div class="bootstrap-timepicker pull-right">
+                                            <div class="form-group">
+                                              <label class="col-sm-4 control-label">Fin:</label>
+                                              <div class="input-group col-sm-8" style="padding-right: 12px;">
+                                                <input type="text" class="form-control timepicker" id="horaFin" name="horaFin"/>
+                                                <div class="input-group-addon">
+                                                  <i class="fa fa-clock-o"></i>
+                                                </div>
+                                              </div><!-- /.input group -->
+                                            </div><!-- /.form group -->
+                                        </div><!-- /.bootstrap-timepicker -->
+                                      </div>
+                                    </div>
+                                </div><!-- /.box-body -->
+                              </div><!-- /.box -->
+                        </div><!-- /.col6 -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group" style="margin-right: 0px; margin-left: 0px;">
+                                  <label>Descripción:</label>
+                                  <textarea id="descripcion" name="descripcion" class="form-control" rows="3" placeholder="ingrese texto..."></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" style="margin-right: 0px; margin-left: 0px;">
+                                  <label>Motivo:</label>
+                                  <textarea id="motivo" name="motivo" class="form-control" rows="3" placeholder="Ingrese texto..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-info pull-right" style="margin-left: 15px;  margin-bottom: 5px;">Agregar Horario</button>
+                            </div> 
+                         </div>
+                         <div class="row">
+                            <div class="col-md-12">
+                                    <div class="alert alert-danger alert-dismissable" id="alerta" style="display: none;  margin-bottom: 5px;">
+                                        <button type="button" class="close" onclick="ocultar()">&times;</button>
+                                        <h4><i class="icon fa fa-check"></i> La hora de Fin debe ser mayor a la hora de Inicio.</h4>
+                                    </div>
+                            </div> 
+                        </div> 
+                    </form>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+            </div><!-- /.colum12 -->
+
+            <!-- left column -->
+            <div class="col-md-6">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Calendario de Médico</h3>
+                        <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div><!-- /.box-header -->
+                    <div class="box-body" id="calendario">
+                        
+                    </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+            </div><!-- /.colum6 -->
+        </div><!-- /.row -->
+    <script type="text/javascript">
+
+        var date = new Date();
+        var d = date.getDate(),
+                m = date.getMonth(),
+                y = date.getFullYear();
+
+        $('#fecha').val(d+"/"+(m+1)+"/"+y);
+
+        function calendarioMedico() {
+            $("#calendario").load('@Url.Action("_PartialCalendario", "cita")', {
+                idMedico: $('#medico').val()
+            })
+        } 
+
+        function registrarHorario() {
+            $("#calendario").load('@Url.Action("_PartialCalendarioRegistro", "cita")', {
+                idMedico: $('#medico').val(),
+                idPaciente: $('#pacienteId').val(),
+                descripcion: $('#descripcion').val(),
+                motivo: $('#motivo').val(),
+                fecha: $('#fecha').val(),
+                horaInicio: $('#horaInicio').val(),
+                horaFin: $('#horaFin').val()
+            })
+        }
+    </script>
+    <script language="javascript" type="text/javascript">
+        $('#paciente').autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/cita/AutoCompletePaciente",
+                    type: "POST",
+                    dataType: "json",
+                    data: { term: request.term },
+                    success: function (responseData) {
+                        var array = responseData.map(function (element) {
+                            return { value: dataItem.nombre, data: dataItem.nombre };
+                        });
+                    },
+                    select: function (event, ui) {
+                        $('#pacienteId').text(mapping[ui.item.value]);
+                    }
+                })
+            }
+        })
+
+        function validacion() {
+            horaInicio = document.getElementById("horaInicio").value;
+            horaFin = document.getElementById("horaFin").value;
+
+            if (horaFin>horaInicio) {   
+                return true;
+            } else {
+                $("#alerta").show();
+                return false;
+            }
+        }
+
+        function ocultar(alerta) {
+            $("#alerta").hide();
+        }
+    </script>
+    <script language="javascript" type="text/javascript">
+        function GetCity(_especialidadId) {
+            var procemessage = "<option value=''> Cargando...</option>";
+            $("#medico").html(procemessage).show();
+            var url = "/Medico/GetMedicoByEspecialidadId/"+ _especialidadId;
+            $.ajax({
+                url: url,
+                data: { especialidadid: _especialidadId },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value=''>Seleccione médico...</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#medico").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+
+        }
+    </script>
+</section><!-- /.content -->

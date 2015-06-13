@@ -1,0 +1,188 @@
+﻿@model MvcApplication1.Models.pacienteModel
+
+@{
+    Layout = "~/Views/MasterIntranet.cshtml";
+    ViewBag.Title = "GestionarPaciente";
+}
+
+<section class="content-header">
+    <h1>
+        Gestionar Pacientes
+        <small>Registrar, modificar, buscar y eliminar pacientes.</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-bed"></i> Inicio</a></li>
+        <li><a href="#"><i></i> Pacientes</a></li>
+        <li class="active">Gestionar Pacientes</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+            @if (@ViewBag.mensaje!=null)
+            {
+                <div class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-check"></i> @ViewBag.mensaje</h4>
+                </div>
+            }
+        </div>    
+     </div>        
+    <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+              <!-- Horizontal Form -->
+              <div class="box box-info">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Registro de Pacientes</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <div class="box-body">
+                  @using (Html.BeginForm("GestionarPaciente", "Paciente", FormMethod.Post, new { id = "medicoForm", @class = "form-horizontal" }))
+                  { 
+                    <div class="row">
+                        <!-- left column -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="nombre" class="col-sm-4 control-label">Nombre:</label>
+                              <div class="col-sm-8">
+                                  @Html.TextBoxFor(m => m.nombre, new { @class = "form-control", placeholder="Nombre", id="nombre", required="true"})
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="apellidoPaterno" class="col-sm-4 control-label">A. Paterno:</label>
+                              <div class="col-sm-8">
+                                  @Html.TextBoxFor(m => m.apellidoPaterno, new { @class = "form-control", placeholder="Apellido Paterno", id="apellidoPaterno", required="true"})
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="apellidoMaterno" class="col-sm-4 control-label">A. Materno:</label>
+                              <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.apellidoMaterno, new { @class = "form-control", placeholder="Apellido Materno", id="apellidoMaterno", required="true"})
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="direccion" class="col-sm-4 control-label">Dirección:</label>
+                              <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.direccion, new { @class = "form-control", placeholder="Dirección", id="direccion", required="true"})
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="telefono" class="col-sm-4 control-label">Teléfono:</label>
+                              <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.telefono, new { @class = "form-control", placeholder="Teléfono", id="telefono", required="true"})
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="email" class="col-sm-4 control-label">E-mail:</label>
+                              <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.email, new { @class = "form-control", placeholder="E-mail", id="email", required="true", type="email"})
+                              </div>
+                            </div>
+                        </div><!-- colum -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="dni" class="col-sm-4 control-label">DNI:</label>
+                              <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.dni, new { @class = "form-control", placeholder="DNI", id="dni", required="true"})
+                              </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="direccion" class="col-sm-4 control-label">Fecha de Nacimiento:</label>
+                                <div class="input-group col-sm-8" style="padding-left: 15px; padding-right: 15px;">
+                                  <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                  </div>
+                                  <input type="text" class="form-control" id="fechaNacimiento" name="fechaNacimiento" data-inputmask="'alias': 'dd/mm/yyyy'" required data-mask/>
+                                </div><!-- /.input group -->
+                            </div><!-- /.form group -->
+                            <div class="form-group">
+                              <label for="direccion" class="col-sm-4 control-label">Edad:</label>
+                              <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.edadString, new { @class = "form-control", placeholder="Edad", id="edad", required="true"})
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="direccion" class="col-sm-4 control-label">Lugar Nacimiento:</label>
+                              <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.lugarNacimiento, new { @class = "form-control", placeholder="Lugar de Nacimiento", id="lugarNacimiento", required="true"})
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="direccion" class="col-sm-4 control-label">RUC:</label>
+                              <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.ruc, new { @class = "form-control", placeholder="RUC", id="ruc", required="true"})
+                              </div>
+                            </div>
+                        </div><!-- colum -->
+                    </div><!-- row -->
+                    <button type="submit" class="btn btn-info pull-left" style="margin-left: 41%;">Registrar</button>
+                }
+               </div><!-- /.box-body -->
+              </div><!-- /.box -->
+           </div><!-- /.col6 -->
+        </div><!-- /.row -->
+        <div class="row">
+           <div class="col-md-12">
+              <!-- Horizontal Form -->
+              <div class="box box-info">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Médicos Registrados</h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                
+                <div class="box-body">
+                  <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Paciente</th>
+                        <th>DNI</th>
+                        <th>Teléfono</th>
+                        <th>Direccion</th>
+                        <th>Email</th>
+                        <th>Fec. Nac.</th>
+                        <th>Edad</th>
+                        <th>Lugar Nac.</th>
+                        <th>Ruc</th>
+                        <th>Opc</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                           int i = 0;
+                        }
+                        @foreach (var e in (List<Entidades.entPaciente>)ViewData["ListaPacientes"])
+                            {
+                             i++;
+                             <tr>
+                                 <td>@i</td>
+                                 <td>@Html.DisplayFor(modelItem => e.nombre) @Html.DisplayFor(modelItem => e.apellidoPaterno)</td>
+                                 <td>@Html.DisplayFor(modelItem => e.dni)</td>
+                                 <td>@Html.DisplayFor(modelItem => e.telefono)</td>
+                                 <td>@Html.DisplayFor(modelItem => e.direccion)</td>
+                                 <td><a href="#" title="@Html.DisplayFor(modelItem => e.email)">Ver</a></td>
+                                 <td>@Html.DisplayFor(modelItem => e.fechaNacimiento)</td>
+                                 <td>@Html.DisplayFor(modelItem => e.edad)</td>
+                                 <td>@Html.DisplayFor(modelItem => e.lugarNacimiento)</td>
+                                 <td>@Html.DisplayFor(modelItem => e.ruc)</td>
+                                 <td>
+                                     <a href="@Url.Action("EditarPaciente", "Paciente", new { idMedico = e.idPaciente})" title="Editar Paciente" rel="facebox"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;
+                                     <a href="@Url.Action("EliminarPaciente", "Paciente" , new { idMedico = e.idPaciente})"title="Eliminar Paciente"><i class="fa fa-times-circle"></i></a>
+                                 </td>
+                             </tr>
+                            }
+                    </tbody>
+                  </table>
+                </div><!-- /.box-body -->
+
+              </div><!-- /.box -->
+           </div><!-- /.col6 -->
+        </div><!-- /.row -->
+</section><!-- /.content -->

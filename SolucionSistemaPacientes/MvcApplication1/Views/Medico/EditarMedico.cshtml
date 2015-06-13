@@ -1,0 +1,94 @@
+﻿@model MvcApplication1.Models.medicoModel
+
+@{
+    Layout = "~/Views/MasterIntranetVacio.cshtml";
+    ViewBag.Title = "EditarMedico";
+}
+
+<section class="content">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+            @if (@ViewBag.mensaje!=null)
+            {
+                <div class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-check"></i> @ViewBag.mensaje</h4>
+                </div>
+            }
+        </div>    
+     </div>        
+    <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+              <!-- Horizontal Form -->
+              <div class="box box-info">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Editar Información de Medico</h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                @{
+                    Entidades.entMedico objMedico = (Entidades.entMedico) ViewData["Medico"];
+                }
+
+                @using (Html.BeginForm("EditarMedico", "Medico", FormMethod.Post, new { id = "medicoForm", @class = "form-horizontal" }))
+                { 
+                    @Html.TextBoxFor(m => m.idMedico, new { id="idMedico", Value= @objMedico.idMedico, type="hidden"})
+                  <div class="box-body">
+                    <div class="form-group">
+                      <label for="email" class="col-sm-4 control-label">Especialidad:</label>
+                      <div class="col-sm-8">
+                          @Html.DropDownListFor(m => m.idEspecialidad, new SelectList(Model.listaEspecialidades, "idEspecialidad", "especialidad"), "Seleccione..", new { title = "Selecione especialidad.", id = "especialidad", @class="form-control", required="true"} )
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="nombre" class="col-sm-4 control-label">Nombre:</label>
+                      <div class="col-sm-8">
+                          @Html.TextBoxFor(m => m.nombre, new { @class = "form-control", placeholder="Nombre", id="nombre", required="true", Value= @objMedico.nombre})
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="apellidoPaterno" class="col-sm-4 control-label">A. Paterno:</label>
+                      <div class="col-sm-8">
+                          @Html.TextBoxFor(m => m.apellidoPaterno, new { @class = "form-control", placeholder="Apellido Paterno", id="apellidoPaterno", required="true", Value= @objMedico.apellidoPaterno})
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="apellidoMaterno" class="col-sm-4 control-label">A. Materno:</label>
+                      <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.apellidoMaterno, new { @class = "form-control", placeholder="Apellido Materno", id="apellidoMaterno", required="true", Value= @objMedico.apellidoMaterno})
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="dni" class="col-sm-4 control-label">DNI:</label>
+                      <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.dni, new { @class = "form-control", placeholder="DNI", id="dni", required="true", Value= @objMedico.dni})
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="telefono" class="col-sm-4 control-label">Teléfono:</label>
+                      <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.telefono, new { @class = "form-control", placeholder="Teléfono", id="telefono", required="true", Value= @objMedico.telefono})
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="direccion" class="col-sm-4 control-label">Dirección:</label>
+                      <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.direccion, new { @class = "form-control", placeholder="Dirección", id="direccion", required="true", Value= @objMedico.direccion})
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="email" class="col-sm-4 control-label">E-mail:</label>
+                      <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.email, new { @class = "form-control", placeholder="E-mail", id="email", required="true", type="email", Value= @objMedico.email})
+                      </div>
+                    </div>
+                  </div><!-- /.box-body -->
+                  <div class="box-footer">
+                    <button type="submit" class="btn btn-info pull-right">Registrar</button>
+                  </div><!-- /.box-footer -->
+                }
+              </div><!-- /.box -->
+           </div><!-- /.col6 -->
+        </div><!-- /.row -->
+</section><!-- /.content -->

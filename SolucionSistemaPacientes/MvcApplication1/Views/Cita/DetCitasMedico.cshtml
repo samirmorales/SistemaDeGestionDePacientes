@@ -1,0 +1,97 @@
+﻿@model MvcApplication1.Models.pacienteModel
+
+@{
+    Layout = "~/Views/MasterIntranet.cshtml";
+    ViewBag.Title = "GestionarPaciente";
+}
+
+<section class="content-header">
+    <h1>
+        Gestionar Pacientes
+        <small>Registrar, modificar, buscar y eliminar pacientes.</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-bed"></i> Inicio</a></li>
+        <li><a href="#"><i></i> Pacientes</a></li>
+        <li class="active">Gestionar Pacientes</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+            @if (@ViewBag.mensaje!=null)
+            {
+                <div class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-check"></i> @ViewBag.mensaje</h4>
+                </div>
+            }
+        </div>    
+     </div>        
+    <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+              <!-- Horizontal Form -->
+              <div class="box box-info">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Registro de Pacientes</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <div class="box-body">
+
+                    <div id="calendar"></div>
+
+                    <script type="text/javascript">
+                        $('#calendar').fullCalendar({
+                            header: {
+                                left: 'prev,next today',
+                                center: 'title',
+                                right: 'month,agendaWeek,agendaDay'
+                            },
+                            buttonText: {
+                                today: 'Hoy',
+                                month: 'Mes',
+                                week: 'Semana',
+                                day: 'Día'
+                            },
+                            allDaySlot: false,
+                            minTime: "07:00:00",
+                            maxTime: "21:00:00",
+                            firstDay: Monday=1,
+                            defaultView: 'agendaWeek',
+                            lang: 'es',
+                            hiddenDays: [ 0,6 ],
+                            //Random default events
+                            events: [
+                                    @foreach (var e in (List<Entidades.entCita>)ViewData["ListaCitas"])
+                                    {
+                                        <text>
+                                            {
+
+                                                title: 'Cita',
+                                                start: new Date(@e.fecha.ToString("yyyy"), @e.fecha.ToString("MM")-1, @e.fecha.ToString("dd"), @e.horaInicioHora, @e.horaInicioMinuto),
+                                                end: new Date(@e.fecha.ToString("yyyy"), @e.fecha.ToString("MM")-1, @e.fecha.ToString("dd"), @e.horaFinHora, @e.HoraFinMinuto),
+                                                allDay: false,
+                                                url: '#',
+                                                backgroundColor: "#00c0ef", //Info (aqua)
+                                                borderColor: "#00c0ef" //Info (aqua)
+                                            },
+                                        </text>
+                                    }
+                                ],
+                                editable: false,
+                                droppable: false // this allows things to be dropped onto the calendar !!!
+                        });
+                        </script>
+
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+           </div><!-- /.col6 -->
+        </div><!-- /.row -->
+</section><!-- /.content -->

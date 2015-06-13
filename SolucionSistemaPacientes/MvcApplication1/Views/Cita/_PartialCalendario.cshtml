@@ -1,0 +1,44 @@
+﻿<div id="calendar"></div>
+<div>@ViewBag.mensaje</div>
+
+<script type="text/javascript">
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            buttonText: {
+                today: 'Hoy',
+                month: 'Mes',
+                week: 'Semana',
+                day: 'Día'
+            },
+            allDaySlot: false,
+            minTime: "07:00:00",
+            maxTime: "21:00:00",
+            firstDay: Monday=1,
+            defaultView: 'agendaWeek',
+            lang: 'es',
+            hiddenDays: [ 0,6 ],
+            //Random default events
+            events: [
+                @foreach (var e in (List<Entidades.entCita>)ViewData["ListaCitas"])
+                {
+                    <text>
+                        {
+                            title: 'Cita',
+                            start: new Date(@e.fecha.ToString("yyyy"), @e.fecha.ToString("MM")-1, @e.fecha.ToString("dd"), @e.horaInicioHora, @e.horaInicioMinuto),
+                            end: new Date(@e.fecha.ToString("yyyy"), @e.fecha.ToString("MM")-1, @e.fecha.ToString("dd"), @e.horaFinHora, @e.HoraFinMinuto),
+                            allDay: false,
+                            url: '#',
+                            backgroundColor: "#00c0ef", //Info (aqua)
+                            borderColor: "#00c0ef" //Info (aqua)
+                        },
+                    </text>
+                }
+            ],
+            editable: false,
+            droppable: false // this allows things to be dropped onto the calendar !!!
+        });
+    </script>

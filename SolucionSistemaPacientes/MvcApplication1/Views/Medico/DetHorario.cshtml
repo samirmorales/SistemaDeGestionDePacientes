@@ -1,0 +1,292 @@
+﻿@{
+    Layout = "~/Views/MasterIntranet.cshtml";
+    ViewBag.Title = "DetHorario";
+}
+
+<section class="content-header">
+    <h1>
+        Gestionar Horarios
+        <small>Registrar, buscar, modificar y eliminar horarios.</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-heartbeat"></i> Inicio</a></li>
+        <li><a href="#"><i></i> Médico</a></li>
+        <li class="active">Gestionar Horario</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+            @if (@ViewBag.mensaje != null)
+            {
+                <div class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-check"></i> @ViewBag.mensaje</h4>
+                </div>
+            }
+        </div>    
+        <div class="col-md-12">
+            @if (@ViewBag.error != null)
+            {
+                <div class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-check"></i> @ViewBag.error</h4>
+                </div>
+            }
+        </div> 
+     </div> 
+            <div class="row">
+             <!-- left column -->
+             <div class="col-md-6">
+              <!-- Horizontal Form -->
+              <div class="box box-info">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Agregar Horario</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                  </div>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                  <div class="box-body">
+                     @using (Html.BeginForm("RegistrarHorario", "Medico", FormMethod.Post, new { id = "agregarHoarioForm", @class = "form-horizontal", onsubmit = "return validacion()" }))
+                     {
+                         <input type="hidden" id="medico" name="medico" Value='@ViewBag.idMedico'/>
+                         <div class="form-group">
+                         <label for="diaHorario" style="padding-top: 1px; margin-left: 10px;" class="col-sm-1 control-label">Día:</label>
+                             @foreach (var e in (List<Entidades.entHorario>)ViewData["ListaDias"])
+                             {
+                                 if (e.registro)
+                                 { 
+                                    <label style="padding-left: 10px;">
+                                        <input type="checkbox" class="flat-red"  disabled/>
+                                        @Html.DisplayFor(modelItem => e.dia)
+                                    </label>
+                                 }
+                                 else
+                                 {
+                                    <label style="padding-left: 10px;">
+                                        <input type="checkbox" class="flat-red" id="dias" name="dias" value="@e.idHorario" checked/>
+                                        @Html.DisplayFor(modelItem => e.dia)
+                                    </label>
+                                 }
+
+                             }
+                        </div>
+                        <div class="col-md-6">
+                            <div class="box box-solid">
+                                <div class="box-header with-border">
+                                  <h3 class="box-title">Horario Mañana</h3>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <div class="bootstrap-timepicker pull-right">
+                                        <div class="form-group">
+                                          <label class="col-sm-4 control-label">Entrada:</label>
+                                          <div class="input-group col-sm-8" style="padding-right: 12px;">
+                                            <input type="text" class="form-control timepicker" id="horaEM" name="horaEM"/>
+                                            <div class="input-group-addon">
+                                              <i class="fa fa-clock-o"></i>
+                                            </div>
+                                          </div><!-- /.input group -->
+                                        </div><!-- /.form group -->
+                                    </div><!-- /.bootstrap-timepicker -->
+                                    <div class="bootstrap-timepicker pull-right">
+                                        <div class="form-group">
+                                          <label class="col-sm-4 control-label">Salida:</label>
+                                          <div class="input-group col-sm-8" style="padding-right: 12px;">
+                                            <input type="text" class="form-control timepicker" id="horaSM" name="horaSM"/>
+                                            <div class="input-group-addon">
+                                              <i class="fa fa-clock-o"></i>
+                                            </div>
+                                          </div><!-- /.input group -->
+                                        </div><!-- /.form group -->
+                                    </div><!-- /.bootstrap-timepicker -->
+                                </div><!-- /.box-body -->
+                              </div><!-- /.box -->
+                        </div><!-- /.col6 -->
+                         
+                         <div class="col-md-6">
+                            <div class="box box-solid">
+                                <div class="box-header with-border">
+                                  <h3 class="box-title">Horario Tarde</h3>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <div class="bootstrap-timepicker pull-right">
+                                        <div class="form-group">
+                                          <label class="col-sm-4 control-label">Entrada:</label>
+                                          <div class="input-group col-sm-8" style="padding-right: 12px;">
+                                            <input type="text" class="form-control timepicker" id="horaET" name="horaET"/>
+                                            <div class="input-group-addon">
+                                              <i class="fa fa-clock-o"></i>
+                                            </div>
+                                          </div><!-- /.input group -->
+                                        </div><!-- /.form group -->
+                                    </div><!-- /.bootstrap-timepicker -->
+                                    <div class="bootstrap-timepicker pull-right">
+                                        <div class="form-group">
+                                          <label class="col-sm-4 control-label">Salida:</label>
+                                          <div class="input-group col-sm-8" style="padding-right: 12px;">
+                                            <input type="text" class="form-control timepicker" id="horaST" name="horaST"/>
+                                            <div class="input-group-addon">
+                                              <i class="fa fa-clock-o"></i>
+                                            </div>
+                                          </div><!-- /.input group -->
+                                        </div><!-- /.form group -->
+                                    </div><!-- /.bootstrap-timepicker -->
+                                </div><!-- /.box-body -->
+                              </div><!-- /.box -->
+                            </div><!-- /.col6 -->
+                         <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-info pull-right" style="margin-left: 15px;  margin-bottom: 5px;">Agregar Horario</button>
+                            </div> 
+                         </div>
+                         <div class="row">
+                            <div class="col-md-12">
+                                    <div class="alert alert-danger alert-dismissable" id="alerta" style="display: none;  margin-bottom: 5px;">
+                                        <button type="button" class="close" onclick="ocultar()">&times;</button>
+                                        <h4><i class="icon fa fa-check"></i> La hora de salida debe ser mayor a la hora de entrada.</h4>
+                                    </div>
+                                    <div class="alert alert-danger alert-dismissable" id="alerta2" style="display: none;  margin-bottom: 5px;">
+                                        <button type="button" class="close" onclick="ocultar2()">&times;</button>
+                                        <h4><i class="icon fa fa-check"></i> La hora de entrada tarde debe ser mayor a la hora de salida mañana.</h4>
+                                    </div>
+                            </div> 
+                        </div> 
+                     }
+                </div><!-- /.box-body -->
+                <script language="javascript" type="text/javascript">
+                    function validacion() {
+                        horaEM = document.getElementById("horaEM").value;
+                        horaSM = document.getElementById("horaSM").value;
+                        horaET = document.getElementById("horaET").value;
+                        horaST = document.getElementById("horaST").value;
+
+                        if (horaSM <= horaEM || horaST <= horaET) {
+                            $("#alerta").show();
+                            return false;
+                        } else {
+                            if (horaET <= horaSM) {
+                                $("#alerta2").show();
+                                return false;
+                            } else {
+                                return true;
+                            }
+                        }
+                    }
+
+                    function ocultar(alerta) {
+                        $("#alerta").hide();
+                    }
+                    function ocultar2(alerta) {
+                        $("#alerta2").hide();
+                    }
+                </script>  
+              </div><!-- /.box -->
+            </div><!-- /.colum12 -->
+
+            <!-- left column -->
+            <div class="col-md-6">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Médicos Registrados</h3>
+                        <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div><!-- /.box-header -->
+                    <!-- form start -->
+                
+                    <div class="box-body">
+                        <table id="TablaHorarioMedido" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                            <th></th>
+                            <th>Mañana</th>
+                            <th>Mañana</th>
+                            <th>Tarde</th>
+                            <th>Tarde</th>
+                            <th>Opc</th>
+                            </tr>
+                            <tr>
+                            <th></th>
+                            <th>Entrada</th>
+                            <th>Salida</th>
+                            <th>Entrada</th>
+                            <th>Salida</th>
+                            <th>Opc</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 1; i < 6; i++)
+                            {
+                                int band = 0;
+                                int idHorario = 0;
+                                <tr>
+                                    @if (i == 1) { 
+                                        <td>Lunes</td>
+                                    }
+                                    @if (i == 2) { 
+                                        <td>Martes</td>
+                                    }
+                                    @if (i == 3) { 
+                                        <td>Miercoles</td>
+                                    }
+                                    @if (i == 4) { 
+                                        <td>Jueves</td>
+                                    }
+                                    @if (i == 5) { 
+                                        <td>Viernes</td>
+                                    }
+
+                                    
+                                    @foreach (var e in (List<Entidades.entHora>)ViewData["Horarios"])
+                                    {
+                                        if (e.idDia == i)
+                                        {
+                                            idHorario = e.idHorario;
+                                            band = 1;
+                                            if (e.idTipoHorario == 1)
+                                            { 
+                                                <td>@Html.DisplayFor(modelItem => e.hora)</td>
+                                            }
+                                            if (e.idTipoHorario == 2)
+                                            { 
+                                                <td>@Html.DisplayFor(modelItem => e.hora)</td>
+                                            }
+                                            if (e.idTipoHorario == 3)
+                                            { 
+                                                <td>@Html.DisplayFor(modelItem => e.hora)</td>
+                                            }
+                                            if (e.idTipoHorario == 4)
+                                            { 
+                                                <td>@Html.DisplayFor(modelItem => e.hora)</td>
+                                            }
+                                        }
+                                    }
+
+                                    @if (band == 0)
+                                    { 
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    }else
+                                    {
+                                        <td>
+                                            <a href="@Url.Action("EditarHorario", "Medico", new { idHorario = idHorario})" title="Editar Horario" rel="facebox"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;
+                                     <a href="@Url.Action("EliminarHorario", "Medico" , new { idHorario = idHorario})"title="Eliminar Horario"><i class="fa fa-times-circle"></i></a>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                        </table>
+                    </div><!-- /.box-body -->
+
+                    </div><!-- /.box -->
+            </div><!-- /.colum6 -->
+        </div><!-- /.row -->
+</section><!-- /.content -->
