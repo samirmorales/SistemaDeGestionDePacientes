@@ -3,3 +3,8 @@ C:\Users\deyvisamir\documents\visual studio 2012\Projects\SolucionSistemaPacient
 C:\Users\deyvisamir\documents\visual studio 2012\Projects\SolucionSistemaPacientes\Entidades\obj\Debug\Entidades.csprojResolveAssemblyReference.cache
 C:\Users\deyvisamir\documents\visual studio 2012\Projects\SolucionSistemaPacientes\Entidades\obj\Debug\Entidades.dll
 C:\Users\deyvisamir\documents\visual studio 2012\Projects\SolucionSistemaPacientes\Entidades\obj\Debug\Entidades.pdb
+C:\Users\deyvisamir\Documents\GitHub\SistemaDeGestionDePacientes\SolucionSistemaPacientes\Entidades\bin\Debug\Entidades.dll
+C:\Users\deyvisamir\Documents\GitHub\SistemaDeGestionDePacientes\SolucionSistemaPacientes\Entidades\bin\Debug\Entidades.pdb
+C:\Users\deyvisamir\Documents\GitHub\SistemaDeGestionDePacientes\SolucionSistemaPacientes\Entidades\obj\Debug\Entidades.csprojResolveAssemblyReference.cache
+C:\Users\deyvisamir\Documents\GitHub\SistemaDeGestionDePacientes\SolucionSistemaPacientes\Entidades\obj\Debug\Entidades.dll
+C:\Users\deyvisamir\Documents\GitHub\SistemaDeGestionDePacientes\SolucionSistemaPacientes\Entidades\obj\Debug\Entidades.pdb

@@ -1,0 +1,80 @@
+﻿
+                        <table id="TablaHorarioMedido" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                            <th></th>
+                            <th>Mañana</th>
+                            <th>Mañana</th>
+                            <th>Tarde</th>
+                            <th>Tarde</th>
+                            </tr>
+                            <tr>
+                            <th></th>
+                            <th>Entrada</th>
+                            <th>Salida</th>
+                            <th>Entrada</th>
+                            <th>Salida</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 1; i < 6; i++)
+                            {
+                                int band = 0;
+                                int idHorario = 0;
+                                <tr>
+                                    @if (i == 1) { 
+                                        <td>Lunes</td>
+                                    }
+                                    @if (i == 2) { 
+                                        <td>Martes</td>
+                                    }
+                                    @if (i == 3) { 
+                                        <td>Miercoles</td>
+                                    }
+                                    @if (i == 4) { 
+                                        <td>Jueves</td>
+                                    }
+                                    @if (i == 5) { 
+                                        <td>Viernes</td>
+                                    }
+
+                                    
+                                    @foreach (var e in (List<Entidades.entHora>)ViewData["Horarios"])
+                                    {
+                                        if (e.idDia == i)
+                                        {
+                                            idHorario = e.idHorario;
+                                            band = 1;
+                                            if (e.idTipoHorario == 1)
+                                            { 
+                                                <td>@Html.DisplayFor(modelItem => e.hora)</td>
+                                            }
+                                            if (e.idTipoHorario == 2)
+                                            { 
+                                                <td>@Html.DisplayFor(modelItem => e.hora)</td>
+                                            }
+                                            if (e.idTipoHorario == 3)
+                                            { 
+                                                <td>@Html.DisplayFor(modelItem => e.hora)</td>
+                                            }
+                                            if (e.idTipoHorario == 4)
+                                            { 
+                                                <td>@Html.DisplayFor(modelItem => e.hora)</td>
+                                            }
+                                        }
+                                    }
+
+                                    @if (band == 0)
+                                    { 
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    }else
+                                    {
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                        </table>

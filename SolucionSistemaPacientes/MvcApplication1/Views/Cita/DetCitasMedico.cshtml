@@ -5,6 +5,116 @@
     ViewBag.Title = "GestionarPaciente";
 }
 
+<div id="fullCalModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+                <h4 id="modalTitle" class="modal-title"><b>Información de la cita.</b></h4>
+            </div>
+            <div id="modalBody" class="modal-body">
+                @using (Html.BeginForm("ModificarEliminarCitas", "Cita", FormMethod.Post, new { id = "medicoForm", @class = "form-horizontal", onsubmit = "return validacion()" }))
+                {
+                        <input type="hidden" id="idCita" name="idCita"/>
+                        <input type="hidden" id="idMedico" name="idMedico"/>
+                        <div class="form-group">
+                            <label for="apellidoPaterno" class="col-sm-4 control-label">Especialidad:</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="especialidad" name="especialidad" class="form-control" disabled/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="apellidoMaterno" class="col-sm-4 control-label">Médico:</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="medico" name="medico" class="form-control" disabled/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono" class="col-sm-4 control-label">Paciente:</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="paciente" name="paciente" class="form-control" disabled/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="direccion" class="col-sm-4 control-label">Fecha:</label>
+                            <div class="col-sm-8" style="padding-left: 15px; padding-right: 15px;">
+                                <div class="input-group-addon" style="float: left; width: 11%; height: 34px;">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input style="float: right; width: 89%;" type="text" class="form-control" id="fecha" name="fecha" data-inputmask="'alias': 'dd/mm/yyyy'" required data-mask/>
+                            </div><!-- /.input group -->
+                        </div>
+                        <div class="col-md-12">
+                            <div class="box box-solid">
+                                <div class="box-header with-border">
+                                  <h3 class="box-title">Hora de la cita</h3>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                          <div class="bootstrap-timepicker pull-right">
+                                            <div class="form-group">
+                                              <label class="col-sm-4 control-label">Inicio:</label>
+                                              <div class="input-group col-sm-8" style="padding-right: 12px;">
+                                                <input type="text" class="form-control timepicker" id="horaInicio" name="horaInicio"/>
+                                                <div class="input-group-addon">
+                                                  <i class="fa fa-clock-o"></i>
+                                                </div>
+                                              </div><!-- /.input group -->
+                                            </div><!-- /.form group -->
+                                        </div><!-- /.bootstrap-timepicker -->
+                                      </div>
+                                      <div class="col-md-6">
+                                          <div class="bootstrap-timepicker pull-right">
+                                            <div class="form-group">
+                                              <label class="col-sm-4 control-label">Fin:</label>
+                                              <div class="input-group col-sm-8" style="padding-right: 12px;">
+                                                <input type="text" class="form-control timepicker" id="horaFin" name="horaFin"/>
+                                                <div class="input-group-addon">
+                                                  <i class="fa fa-clock-o"></i>
+                                                </div>
+                                              </div><!-- /.input group -->
+                                            </div><!-- /.form group -->
+                                        </div><!-- /.bootstrap-timepicker -->
+                                      </div>
+                                    </div>
+                                </div><!-- /.box-body -->
+                              </div><!-- /.box -->
+                        </div><!-- /.col6 -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group" style="margin-right: 0px; margin-left: 0px;">
+                                  <label>Descripción:</label>
+                                  <p id="txtDescripcion"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" style="margin-right: 0px; margin-left: 0px;">
+                                  <label>Motivo:</label>
+                                  <p id="txtMotivo"></p>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-danger pull-right" style="margin-left: 15px;  margin-bottom: 5px;" value="eliminar" name="btn">Eliminar Cita</button>
+                                <button type="submit" class="btn btn-info pull-right" style="margin-left: 15px;  margin-bottom: 5px;" value="modificar" name="btn">Modificar Cita</button>
+                            </div> 
+                         </div>
+                         <div class="row">
+                            <div class="col-md-12">
+                                    <div class="alert alert-danger alert-dismissable" id="alerta" style="display: none;  margin-bottom: 5px;">
+                                        <button type="button" class="close" onclick="ocultar()">&times;</button>
+                                        <h4><i class="icon fa fa-check"></i> La hora de Fin debe ser mayor a la hora de Inicio.</h4>
+                                    </div>
+                            </div>
+                        </div> 
+                }
+            </div>
+        </div>
+    </div>
+</div> 
+
 <section class="content-header">
     <h1>
         Gestionar Pacientes
@@ -22,7 +132,7 @@
     <div class="row">
         <!-- left column -->
         <div class="col-md-12">
-            @if (@ViewBag.mensaje!=null)
+            @if (@ViewBag.mensaje != null)
             {
                 <div class="alert alert-success alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -73,8 +183,17 @@
                                     {
                                         <text>
                                             {
-
                                                 title: 'Cita',
+                                                idCita: '@e.idCita',
+                                                idMedico: '@e.idMedico',
+                                                especialidad: '@e.especialidad.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ")',
+                                                medico: '@e.medico.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ")',
+                                                paciente: '@e.paciente.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ")',
+                                                fecha: '@e.fecha',
+                                                horaInicio: '@e.horaInicio',
+                                                horaFin: '@e.horaFin',
+                                                descripcion: '@e.descripcion.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ")',
+                                                motivo: '@e.motivo.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ")',
                                                 start: new Date(@e.fecha.ToString("yyyy"), @e.fecha.ToString("MM")-1, @e.fecha.ToString("dd"), @e.horaInicioHora, @e.horaInicioMinuto),
                                                 end: new Date(@e.fecha.ToString("yyyy"), @e.fecha.ToString("MM")-1, @e.fecha.ToString("dd"), @e.horaFinHora, @e.HoraFinMinuto),
                                                 allDay: false,
@@ -85,6 +204,19 @@
                                         </text>
                                     }
                                 ],
+                            eventClick: function(event){
+                                    $('#idCita').val(event.idCita);
+                                    $('#idMedico').val(event.idMedico);
+                                    $('#especialidad').val(event.especialidad);
+                                    $('#medico').val(event.medico);
+                                    $('#paciente').val(event.paciente);
+                                    $('#fecha').val(event.fecha);
+                                    $('#horaInicio').val(event.horaInicio);
+                                    $('#horaFin').val(event.horaFin);
+                                    $('#txtDescripcion').html(event.descripcion);
+                                    $('#txtMotivo').html(event.motivo);
+                                    $('#fullCalModal').modal();
+                                },
                                 editable: false,
                                 droppable: false // this allows things to be dropped onto the calendar !!!
                         });
@@ -95,3 +227,21 @@
            </div><!-- /.col6 -->
         </div><!-- /.row -->
 </section><!-- /.content -->
+
+    <script type="text/javascript">
+        function validacion() {
+            horaInicio = document.getElementById("horaInicio").value;
+            horaFin = document.getElementById("horaFin").value;
+
+            if (horaFin>horaInicio) {   
+                return true;
+            } else {
+                $("#alerta").show();
+                return false;
+            }
+        }
+
+        function ocultar(alerta) {
+            $("#alerta").hide();
+        }
+    </script>

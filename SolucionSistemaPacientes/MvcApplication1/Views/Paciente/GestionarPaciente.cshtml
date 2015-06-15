@@ -99,13 +99,13 @@
                                   <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                   </div>
-                                  <input type="text" class="form-control" id="fechaNacimiento" name="fechaNacimiento" data-inputmask="'alias': 'dd/mm/yyyy'" required data-mask/>
+                                  <input type="text" class="form-control" id="fechaNacimiento" name="fechaNacimiento" data-inputmask="'alias': 'dd/mm/yyyy'"  onblur="calcularEdad()" required data-mask/>
                                 </div><!-- /.input group -->
                             </div><!-- /.form group -->
                             <div class="form-group">
                               <label for="direccion" class="col-sm-4 control-label">Edad:</label>
                               <div class="col-sm-8">
-                                @Html.TextBoxFor(m => m.edadString, new { @class = "form-control", placeholder="Edad", id="edad", required="true"})
+                                  <input type="text" id="edad" name="edad" class = "form-control" placeholder="Edad"/>
                               </div>
                             </div>
                             <div class="form-group">
@@ -186,3 +186,18 @@
            </div><!-- /.col6 -->
         </div><!-- /.row -->
 </section><!-- /.content -->
+
+<script type="text/javascript">
+    function calcularEdad() {
+        var f = new Date();
+        var fec = $("#fechaNacimiento").val();
+        fec = fec.replace("/", "-");
+        fec = fec.replace("/", "-");
+
+        var fecha = Date.parse(fec);
+        var fechan = new Date(fecha);
+
+        var edad = f.getFullYear() - fechan.getFullYear();
+        $("#edad").val(edad);
+    }
+</script>

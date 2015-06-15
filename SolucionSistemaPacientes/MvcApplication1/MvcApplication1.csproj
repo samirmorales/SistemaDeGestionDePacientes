@@ -1213,6 +1213,7 @@
     <Content Include="Views\Cita\_PartialCalendarioRegistro.cshtml" />
     <Content Include="Views\Cita\CitasMedico.cshtml" />
     <Content Include="Views\Cita\DetCitasMedico.cshtml" />
+    <Content Include="Views\Cita\_PartialHorario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

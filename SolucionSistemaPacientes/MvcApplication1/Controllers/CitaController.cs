@@ -56,24 +56,36 @@ namespace MvcApplication1.Controllers
             obj.horaFinHora = Convert.ToInt32(obj.horaFin.ToString("%h"));
             obj.HoraFinMinuto = Convert.ToInt32(obj.horaFin.ToString("%m"));
 
-
-
             try
             {
                 //Boolean inserto = negUsuario.Instancia.InsertarUsuarioVacio(4);
-                Boolean inserto = negCita.Instancia.InsertarCita(obj);
+                int inserto = negCita.Instancia.InsertarCita(obj);
 
-                if (inserto)
+                ViewData["ListaCitas"] = negCita.Instancia.ListarCitasByIdMedico(idMedico);
+                ViewBag.anio = obj.fecha.ToString("yyyy");
+                ViewBag.mes = obj.fecha.ToString("MM");
+                ViewBag.dia = obj.fecha.ToString("dd");
+
+                if (inserto==1)
                 {
-                    ViewData["ListaCitas"] = negCita.Instancia.ListarCitasByIdMedico(idMedico);
-                    ViewBag.anio = obj.fecha.ToString("yyyy");
-                    ViewBag.mes = obj.fecha.ToString("MM");
-                    ViewBag.dia = obj.fecha.ToString("dd");
+                    
                     ViewBag.mensaje ="Se registró con éxito";
 
                     return PartialView();
 
                 }
+                else if (inserto == 2)
+                {
+                    ViewBag.mensajeHora = "Cita fuera de horario de trabajo.";
+
+                    return PartialView();
+                }
+                else if (inserto == 3)
+                {
+                    ViewBag.mensajeHora = "Cruze de citas.";
+
+                    return PartialView();
+                } 
                 else
                 {
                     return RedirectToAction("AgregarCita", "Cita", new { error = "No se pudo insertar." });
@@ -107,6 +119,96 @@ namespace MvcApplication1.Controllers
             ViewData["ListaCitas"] = negCita.Instancia.ListarCitasByIdMedico(idMedico);
             ViewBag.idmedico = idMedico;
             return View();
+        }
+
+        public ActionResult ModificarEliminarCitas(FormCollection form)
+        {
+            if (form["btn"].ToString().Equals("modificar"))
+            {
+                int idMedico = Convert.ToInt32(form["idMedico"]);
+                entCita obj = new entCita();
+                obj.idCita = Convert.ToInt32(form["idCita"]);
+                obj.fecha = Convert.ToDateTime(form["fecha"]);
+
+                obj.horaInicio = TimeSpan.Parse(form["horaInicio"].ToString());
+                obj.horaInicioHora = Convert.ToInt32(obj.horaInicio.ToString("%h"));
+                obj.horaInicioMinuto = Convert.ToInt32(obj.horaInicio.ToString("%m"));
+
+                obj.horaFin = TimeSpan.Parse(form["horaFin"].ToString());
+                obj.horaFinHora = Convert.ToInt32(obj.horaFin.ToString("%h"));
+                obj.HoraFinMinuto = Convert.ToInt32(obj.horaFin.ToString("%m"));
+
+                try
+                {
+                    //Boolean inserto = negUsuario.Instancia.InsertarUsuarioVacio(4);
+                    Boolean inserto = negCita.Instancia.ModificarCita(obj);
+
+                    if (inserto)
+                    {
+                        return RedirectToAction("DetCitasMedico", "Cita", new { mensaje = "Se modificó con éxito", idMedico = idMedico });
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("DetCitasMedico", "Cita", new { error = "No se pudo modificar.", idMedico = idMedico });
+                    }
+                }
+                catch (ApplicationException ae)
+                {
+                    return RedirectToAction("DetCitasMedico", "Cita", new { error = ae.Message });
+                }
+                catch (Exception e)
+                {
+                    return RedirectToAction("Error", "Error", new { error = e.Message });
+                }
+            }
+            else if (form["btn"].ToString().Equals("eliminar"))
+            {
+                int idCita = Convert.ToInt32(form["idCita"]);
+                int idMedico = Convert.ToInt32(form["idMedico"]);
+
+                try
+                {
+                    //Boolean inserto = negUsuario.Instancia.InsertarUsuarioVacio(4);
+                    Boolean inserto = negCita.Instancia.EliminarCita(idCita);
+
+                    if (inserto)
+                    {
+                        return RedirectToAction("DetCitasMedico", "Cita", new { mensaje = "Se eliminó con éxito", idMedico =  idMedico  });
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("DetCitasMedico", "Cita", new { error = "No se pudo eliminar.", idMedico = idMedico });
+                    }
+                }
+                catch (ApplicationException ae)
+                {
+                    return RedirectToAction("DetCitasMedico", "Cita", new { error = ae.Message });
+                }
+                catch (Exception e)
+                {
+                    return RedirectToAction("Error", "Error", new { error = e.Message });
+                }
+            }
+            else {
+                return RedirectToAction("DetCitasMedico", "Cita");
+            }
+        }
+
+        public ActionResult _PartialHorario(FormCollection form, String mensaje, String error, int idMedico = 0)
+        {
+            if (idMedico == 0)
+            {
+                idMedico = idMedico;
+            }
+
+            ViewData["ListaDias"] = negHorario.Instancia.ListarDiasByRegistro(idMedico);
+            ViewData["Horarios"] = negHora.Instancia.ListarHorariosByMedico(idMedico);
+            ViewBag.mensaje = mensaje;
+            ViewBag.error = error;
+            ViewBag.idMedico = idMedico;
+            return PartialView();
         }
     }
 }

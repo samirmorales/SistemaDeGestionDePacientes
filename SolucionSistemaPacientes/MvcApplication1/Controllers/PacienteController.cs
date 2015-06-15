@@ -36,7 +36,7 @@ namespace MvcApplication1.Controllers
             obj.email = modeloPaciente.email;
             obj.telefono = modeloPaciente.telefono;
             obj.fechaNacimiento = Convert.ToDateTime(form["fechaNacimiento"]);
-            obj.edad = Convert.ToInt32(modeloPaciente.edadString);
+            obj.edad = Convert.ToInt32(form["edad"]);
             obj.lugarNacimiento = modeloPaciente.lugarNacimiento;
             obj.ruc = modeloPaciente.ruc;
             

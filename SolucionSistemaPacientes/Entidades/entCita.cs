@@ -9,6 +9,7 @@ namespace Entidades
     public class entCita
     {
         public Int32 idCita { get; set; }
+        public String especialidad { get; set; }
         public Int32 idMedico { get; set; }
         public String medico { get; set; }
         public Int32 idPaciente { get; set; }

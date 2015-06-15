@@ -98,5 +98,42 @@ namespace Datos
             }
             return lista;
         }
+
+        public List<entHora> ListarHorarioByMedicoAndDia(int idMedico, int idDia)
+        {
+            List<entHora> lista = null;
+            SqlCommand cmd = null;
+            SqlDataReader dr = null;
+            try
+            {
+                Conexion cn = new Conexion();
+                SqlConnection conex = cn.Conectar();
+                cmd = new SqlCommand("sp_ListarHorarioByMedicoAndDia", conex);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@prmIdMedico", idMedico);
+                cmd.Parameters.AddWithValue("@prmIdDia", idDia);
+                conex.Open();
+                dr = cmd.ExecuteReader();
+                lista = new List<entHora>();
+                while (dr.Read())
+                {
+                    entHora obj = new entHora();
+                    obj.idHora = Convert.ToInt32(dr["idhora"]);
+                    obj.idTipoHorario = Convert.ToInt32(dr["idtipohorario"]);
+                    obj.hora = TimeSpan.Parse(dr["hora"].ToString());
+
+                    lista.Add(obj);
+                }
+            }
+            catch
+            {
+                lista = null;
+            }
+            finally
+            {
+                cmd.Connection.Close();
+            }
+            return lista;
+        }
     }
 }
