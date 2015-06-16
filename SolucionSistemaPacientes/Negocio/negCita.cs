@@ -23,15 +23,23 @@ namespace Negocio
         {
             int idDia = 0;
             String dia = obj.fecha.ToString("ddd");
-            if(obj.fecha.ToString("ddd").Equals("lu.")){
+            if (dia.Equals("lu."))
+            {
                 idDia = 1;
-            } else if(obj.fecha.ToString("ddd").Equals("ma.")){
+            } 
+            else if(dia.Equals("ma.")){
                 idDia = 2;
-            } else if(obj.fecha.ToString("ddd").Equals("mi.")){
+            }
+            else if (dia.Equals("mie"))
+            {
                 idDia = 3;
-            } else if(obj.fecha.ToString("ddd").Equals("ju.")){
+            }
+            else if (dia.Equals("ju."))
+            {
                 idDia = 4;
-            } else if(obj.fecha.ToString("ddd").Equals("vi.")){
+            }
+            else if (dia.Equals("vi."))
+            {
                 idDia = 5;
             } 
 
