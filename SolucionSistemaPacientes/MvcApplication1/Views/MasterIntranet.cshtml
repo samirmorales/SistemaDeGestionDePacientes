@@ -62,6 +62,16 @@
     <script src="../Plantilla/AdminLTE-2.1.1/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
     <script src='../Plantilla/AdminLTE-2.1.1/plugins/fullcalendar/lang-all.js'></script>
 
+    
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $('a[rel*=facebox]').facebox({
+                loadingImage: '../src/loading.gif',
+                closeImage: '../src/closelabel.png'
+            })
+        })
+  </script>
+
 </head>
 <body class="skin-blue sidebar-mini">
     <div class="wrapper">
@@ -251,14 +261,6 @@
         });
 </script>
 
-    <script type="text/javascript">
-        jQuery(document).ready(function ($) {
-            $('a[rel*=facebox]').facebox({
-                loadingImage: '../src/loading.gif',
-                closeImage: '../src/closelabel.png'
-            })
-        })
-  </script>
   <script type="text/javascript">
       //iCheck for checkbox and radio inputs
       $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
